@@ -1,6 +1,6 @@
 class Cell():
     """ A class representing a cell in the maze"""
-            
+    neighbours = []
     def __init__(self, row, column):
         
         self.visited = False
@@ -40,7 +40,8 @@ class Cell():
         self.in_maze = True
     
     def get_neighbours(self):
-        self.neighbours
+        return self.neighbours
+        
     def add_neighbour(self, direction):
         if direction == 'N':
             self.neighbours[0] = True

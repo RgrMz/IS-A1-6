@@ -85,9 +85,9 @@ def main():
     
     # Calculate the paths of the maze
     calculate_path(maze)
-    print(grid[0][0].get_neighbours())
-    print(grid[1][0].get_neighbours())
     print(maze.get_grid()[0][0].get_neighbours())
+    print(maze.get_grid()[0][1].get_neighbours())
+    print(maze.get_grid()[1][0].get_neighbours())
     
 if __name__ == "__main__": 
     main()

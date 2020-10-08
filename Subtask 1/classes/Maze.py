@@ -9,7 +9,6 @@ class Maze():
             aux_row = []
             for column in range(number_columns):
                 aux_row.append(Cell(row, column))
-                print(aux_row[0].get_neighbours())
             self.grid.append(aux_row)
     
     def get_grid(self):

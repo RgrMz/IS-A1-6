@@ -23,26 +23,25 @@ class Maze():
     def break_walls(self, cell1, cell2):
         x_movement = cell1.get_X()-cell2.get_X()
         y_movement = cell1.get_Y()-cell2.get_Y()
-        c1 = self.get_cell(cell1.get_X(), cell1.get_Y())
-        c2 = self.get_cell(cell2.get_X(), cell2.get_Y())
+        #c1 = self.get_cell(cell1.get_X(), cell1.get_Y())
+        #c2 = self.get_cell(cell2.get_X(), cell2.get_Y())
         # As they are part of the maze
-        c1.set_in_maze()
+        cell1.set_in_maze()
         # VERTICAL movement as the X is not the same
         if x_movement == -1:
             # Movement cell1 = S | Wall on cell2 = N
-            c1.add_neighbour('S')
-            c2.add_neighbour('N')
+            cell1.add_neighbour('S')
+            cell2.add_neighbour('N')
         elif x_movement == 1:
             # Movement cell1 = N | Wall on cell2 = S
-            c1.add_neighbour('N')
-            c2.add_neighbour('S')
-            
+            cell1.add_neighbour('N')
+            cell2.add_neighbour('S')
         # HORIZONTAL movement as the Y is not the same
         if y_movement == -1:
             # Movement cell1 = E | Wall on cell2 = O
-            c1.add_neighbour('E')
-            c2.add_neighbour('O')
+            cell1.add_neighbour('E')
+            cell2.add_neighbour('O')
         elif y_movement == 1:
             # Movement cell1 = O | Wall on cell2 = E
-            c1.add_neighbour('O')
-            c2.add_neighbour('E')
+            cell1.add_neighbour('O')
+            cell2.add_neighbour('E')

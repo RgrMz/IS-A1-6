@@ -41,6 +41,9 @@ class Cell():
     
     def get_neighbours(self):
         return self.neighbours
+    
+    def set_neighbours(self, new_neighbours):
+        self.neighbours = new_neighbours
         
     def add_neighbour(self, direction):
         if direction == 'N':

@@ -1,8 +1,9 @@
-import json
-import pygame
 import sys
 import random
 from classes.Maze import Maze
+from functionalities.export import *
+from maze_constants import *
+from functionalities.import_json import *
 
 # Random seed to get the random cells
 random.seed()
@@ -10,9 +11,6 @@ random.seed()
 ###     CONSTANTS      ###
 number_rows = int(sys.argv[1])
 number_columns = int(sys.argv[2])
-movements = ['N','E','S','O']
-move_in_columns = {'N' : 0, 'E' : 1, 'S' : 0, 'O' : -1}
-move_in_rows = {'N' : -1, 'E' : 0, 'S' : 1, 'O' : 0}
 
 def calculate_path(maze):
     # Wilson's Algorithm
@@ -35,7 +33,6 @@ def calculate_path(maze):
         while True:
             # Random movement
             movement = random.choice(movements)
-            print(movement)
             next_cell_X, next_cell_Y = starting_X + move_in_columns[movement], starting_Y + move_in_rows[movement]
             # Checking if the movement takes us to a cell or outside the grid
             if maze.exists_cell(next_cell_X, next_cell_Y):
@@ -74,7 +71,29 @@ def build_path(maze, visited_cells):
     index = 0
     while index != len(visited_cells) - 1:
         maze.break_walls(visited_cells[index],visited_cells[index+1])
-        index = index + 1
+        index = index + 1 
+    
+def ask_for_functionality(maze):
+    correct = False
+    num_opt = -1
+    
+    while num_opt != 3:
+        print("\nSelect the functionality you want to use: \n1. Create a maze and export a JSON file and a JPEG image.ArithmeticError"+
+            +"\n2.- Import a JSON file to produce the maze and export the JPEG image of it.\n3. Exit.")
+    
+        while not correct:
+            num_opt = input("Please introduce the number of the option.\n")
+            if num_opt < 1 or num_opt > 3:
+                print("Invalid option.\n")
+            else:
+                correct = True
+    
+        if num_opt == 1:
+            export.export_json(maze, number_rows, number_columns)
+        elif num_opt == 2:
+            export.export_image(maze, number_rows, number_columns)
+        elif num_opt == 3:
+            exit()
                     
 def main():
     
@@ -83,20 +102,22 @@ def main():
     grid = maze.get_grid()
 
     # Randomnly assigning the first cell of the maze
-    ending_cell = maze.get_cell(random.randint(0, number_rows-1), random.randint(0, number_columns-1))
+    ending_cell = maze.get_cell(random.randint(0, number_rows - 1), random.randint(0, number_columns - 1))
     ending_cell.set_in_maze()    
     
     # Calculate the paths of the maze
     calculate_path(maze)
-    for i in range(len(grid)): 
-        for j in range(len(grid[i])):
-            print(maze.get_grid()[i][j].get_position(), ": ", maze.get_grid()[i][j].get_neighbours())
-
+    
+    export_json(maze, number_rows, number_columns)
+    
+    export_image(maze, number_rows, number_columns)
+    
+    #import_json('./json-mazes/Lab_10_10.json')
     
 if __name__ == "__main__": 
     main()
 
-#Checking the correct creation of the maze
+# Checking the correct creation of the maze
 # for i in range(len(grid)): 
 #     for j in range(len(grid[i])):
 #         print(grid[i][j].get_X(), ",", grid[i][j].get_Y())

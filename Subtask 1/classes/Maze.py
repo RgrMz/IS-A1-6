@@ -4,6 +4,8 @@ class Maze():
     
     def __init__(self, number_rows, number_columns):
         
+        self.rows = number_rows
+        self.columns = number_columns
         self.grid = []
         for row in range(number_rows):
             aux_row = []
@@ -19,7 +21,14 @@ class Maze():
     
     def exists_cell(self, position_X, position_Y):
         return position_X >= 0 and position_X < len(self.get_grid()) and position_Y >= 0 and position_Y < len(self.get_grid()[0])
+    ## change ##
+    def get_number_rows(self):
+        return self.rows
     
+    def get_number_columns(self):
+        return self.columns
+    ##change ##
+
     def break_walls(self, cell1, cell2):
         x_movement = cell1.get_X()-cell2.get_X()
         y_movement = cell1.get_Y()-cell2.get_Y()

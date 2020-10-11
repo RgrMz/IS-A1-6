@@ -1,46 +1,49 @@
 import json
+# Hide the pygame message
+import os 
+os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 import pygame
 from maze_constants import *
 
-def export_json(maze, number_rows, number_columns):
-    
+def export_json(maze):
+
     grid = maze.get_grid()
     # Creation of the dictionary
     maze_to_json = {
-        "rows" : number_rows,
-        "cols" : number_columns,
+        "rows" : maze.get_number_rows(),
+        "cols" : maze.get_number_columns(),
         "max_n" : 4,  
         "mov" : [[-1,0], [0,1], [1,0], [0,-1]],
         "id_mov" : ["N", "E", "S", "O"],
         "cells" : {},
     }
     
-    for i in range(len(grid)):
-        for j in range(len(grid[i])):
+    for i in range(maze.get_number_rows()):
+        for j in range(maze.get_number_columns()):
             maze_to_json["cells"][str(maze.get_cell(i,j).get_position())] = {
                 "value" : maze.get_cell(i,j).get_value(), 
-                "neighbours" : maze.get_cell(i,j).get_neighbours()
+                "neighbors" : maze.get_cell(i,j).get_neighbours()
             }
     
     # Generation of the json file
-    with open("./json-mazes/Lab_{0}_{1}.json".format(number_rows, number_columns), 'w', encoding='utf-8') as f:
+    with open("./json-mazes/Lab_{0}_{1}.json".format(maze.get_number_rows(), maze.get_number_columns()), 'w', encoding='utf-8') as f:
         json.dump(maze_to_json, f, ensure_ascii=False, indent=2)
             
-def export_image(maze, number_rows, number_columns):
+def export_image(maze):
     
     grid = maze.get_grid()
-    screen_height, screen_width = cell_wall_length*number_rows + border_len*2, cell_wall_length*number_columns + border_len*2
+    screen_height, screen_width = cell_wall_length*maze.get_number_rows() + border_len*2, cell_wall_length*maze.get_number_columns() + border_len*2
     pygame.init()
     screen = pygame.Surface((screen_width, screen_height))
     running = True
         
     screen.fill((255,255,255))
     # Drawing of all the cells
-    for i in range(len(grid)):
-        for j in range(len(grid[i])):
+    for i in range(maze.get_number_rows()):
+        for j in range(maze.get_number_columns()):
             drawCell(grid[i][j],screen, cell_wall_length, cell_wall_length)
     #pygame.display.flip()
-    pygame.image.save(screen, "./images-mazes/Lab_{0}_{1}.png".format(number_rows, number_columns))
+    pygame.image.save(screen, "./images-mazes/Lab_{0}_{1}.png".format(maze.get_number_rows(), maze.get_number_columns()))
 
 def drawCell(cell, screen, cell_x_length, cell_y_length):
     cell_row = cell.get_X()

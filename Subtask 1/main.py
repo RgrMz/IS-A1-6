@@ -5,7 +5,6 @@ from classes.ConsistencyError import ConsistencyError
 from functionalities.import_json import *
 from functionalities.export import *
 from functionalities.wilsons_algorithm import *
-
 # Colored text
 from colorama import Fore
 

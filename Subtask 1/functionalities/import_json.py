@@ -63,9 +63,9 @@ def import_json(file_name):
     imported_maze = Maze(maze_dict["rows"], maze_dict["cols"])
     
     # Getting the correct state of the cells of the JSON file imported   
-    for i in range(imported_maze.get_number_rows()):
-        for j in range(imported_maze.get_number_columns()):
-            imported_maze.get_cell(i,j).set_neighbours(maze_dict["cells"][str(imported_maze.get_cell(i,j).get_position())]["neighbors"])
+    for row in range(imported_maze.get_number_rows()):
+        for column in range(imported_maze.get_number_columns()):
+            imported_maze.get_cell(row,column).set_neighbours(maze_dict["cells"][str(imported_maze.get_cell(row,column).get_position())]["neighbors"])
             # Get the value : implemented in the future
             # imported_maze.get_cell(i,j).set_value(maze_dict["cells"][str(imported_maze.get_cell(i,j).get_position())]["value"])
     
@@ -75,7 +75,7 @@ def import_json(file_name):
     for row in range(imported_maze.get_number_rows()):
         for column in range(imported_maze.get_number_columns()):
             if not is_consistent(grid[row][column], imported_maze):
-                raise ConsistencyError("The maze has an inconsistency", file_name, grid[i][j].get_position())
+                raise ConsistencyError("The maze has an inconsistency", file_name, grid[row][column].get_position())
             
     # If there is no exception then we can import the image
     export_image(imported_maze)  

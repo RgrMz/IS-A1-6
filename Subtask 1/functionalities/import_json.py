@@ -78,4 +78,4 @@ def import_json(file_name):
                 raise ConsistencyError("The maze has an inconsistency", file_name, grid[row][column].get_position())
             
     # If there is no exception then we can import the image
-    export_image(imported_maze)  
+    export_image(imported_maze)

@@ -7,11 +7,15 @@ from functionalities.export import *
 from functionalities.wilsons_algorithm import *
 # Colored text
 from colorama import Fore
-
-# Random seed to get the random cells
-random.seed()
     
 def menu():
+    
+    """
+        Description:
+            This function works as a menu of the program, it includes all the options
+            it offers.
+    """
+    
     correct = False
     num_opt = -1
     print(f"""{Fore.BLUE}
@@ -32,11 +36,17 @@ def menu():
                 print(f"{Fore.RED}Invalid option.{Fore.RESET}\n")
             else:
                 correct = True
-    
+        # Create a maze and export the JSON and the image
         if num_opt == 1:
-            number_rows = int(input("Introduce the number of ROWS.\n"))
-            number_columns = int(input("Introduce the number of COLUMNS.\n"))
-
+            try:
+                number_rows = int(input("Introduce the number of ROWS.\n"))
+                number_columns = int(input("Introduce the number of COLUMNS.\n"))
+            except Exception as error: 
+                print(f"{Fore.RED}")
+                print("Error ocurred: {}".format(error))
+                print(f"{Fore.RESET}")
+                continue
+                
             if (number_rows > 0):
                 if (number_columns > 0):
 
@@ -51,7 +61,7 @@ def menu():
                     print(f"{Fore.RED}You have to introduce a valid number of COLUMNS.{Fore.RESET}")
             else:
                 print(f"{Fore.RED}You have to introduce a valid number of ROWS.{Fore.RESET}")
-
+        # Import the JSON file to then export the image
         elif num_opt == 2:
             
             try:
@@ -70,6 +80,13 @@ def menu():
             exit()
                     
 def main():
+    
+    """
+        Description:
+            This is the main function of the program, it calls the menu function so that it shows
+            the user the functionalities it offers
+    """
+    
     menu()
     
 if __name__ == "__main__": 

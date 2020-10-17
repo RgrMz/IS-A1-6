@@ -1,56 +1,80 @@
 class Cell():
-    """ A class representing a cell in the maze"""
-    neighbours = []
+    
+    """
+        Class Description:
+            This class is used to represent all the cells that are contained in the grid
+            and in the final maze when found.
+    """
+    
+    #_neighbours = []
     def __init__(self, row, column):
         
-        self.visited = False
-        self.in_maze = False
-        self.neighbours = [False]*4
-        self.position = (row, column)
-        self.value = 0
+        """
+            Description:
+                This is the constructor of the objects of this class.
+            Parameters:
+                self (Cell): Represents the instance of the object, the cell you are creating/working on
+                row (int): Represents the row it is in to set its location
+                column (int): Represents the column it is in to set its location
+        """
+        
+        self._visited = False
+        self._in_maze = False
+        self._neighbours = [False]*4
+        self._position = (row, column)
+        self._value = 0
     
     def is_visited(self):
-        return self.visited
+        return self._visited
 
     def is_in_maze(self):
-        return self.in_maze
+        return self._in_maze
 
     def get_position(self):
-        return self.position
+        return self._position
 
     def get_X(self):
-        return self.position[0]
+        return self._position[0]
     
     def get_Y(self):
-        return self.position[1]
+        return self._position[1]
         
     def get_neighbours(self):
-        return self.neighbours
+        return self._neighbours
         
     def get_value(self):
-        return self.value
+        return self._value
     
     def get_visited(self):
-        return self.visited
+        return self._visited
         
     def set_visited(self, state):
-        self.visited = state
+        self._visited = state
     
     def set_in_maze(self):
-        self.in_maze = True
+        self._in_maze = True
     
     def get_neighbours(self):
-        return self.neighbours
+        return self._neighbours
     
     def set_neighbours(self, new_neighbours):
-        self.neighbours = new_neighbours
+        self._neighbours = new_neighbours
         
     def add_neighbour(self, direction):
+        
+        """
+            Description:
+                This method adds a corresponding neighbour to a cell
+            Parameters:
+                self (Cell): Represents the instance of the object, the cell you are creating/working on
+                direction (str): Represents the direction in which a neighbour has to be added
+        """
+        
         if direction == 'N':
-            self.neighbours[0] = True
+            self._neighbours[0] = True
         elif direction == 'E':
-            self.neighbours[1] = True
+            self._neighbours[1] = True
         elif direction == 'S':
-            self.neighbours[2] = True
+            self._neighbours[2] = True
         elif direction == 'O':
-            self.neighbours[3] = True
+            self._neighbours[3] = True

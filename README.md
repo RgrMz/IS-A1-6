@@ -15,7 +15,10 @@ Before running the program it is necessary to install two modules:
   Note: If you dont have superuser privileges you can use `--user`. Otherwise just type `sudo <command>`
 
 The way of running it is:
+
     1. Move yourself into the folder `Subtask1` with `cd Subtask1/`
+    
     2. Execute the command `python -B main.py` if you have installed Python3 or a superior version, otherwise `python3 -B main.py`
+    
     3. Interact with the command line menu to obtain the desired result
   

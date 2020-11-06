@@ -37,6 +37,8 @@ def export_json(maze):
     # Saving the json file
     with open("./json-mazes/Lab_{0}_{1}.json".format(maze.get_number_rows(), maze.get_number_columns()), 'w', encoding='utf-8') as f:
         json.dump(maze_to_json, f, ensure_ascii=False, indent=2)
+        
+    ### A LO MEJOR INTERESA RETURNEAR EL FILENAME!!!
             
 def export_image(maze):
     
@@ -93,3 +95,18 @@ def drawCell(cell, screen, cell_x_length, cell_y_length):
         pygame.draw.line(screen, (80, 0, 80), (south_init[0], south_init[1]), (south_final[0], south_final[1]), cell_width)
     if cell.get_neighbours()[3] == False:
         pygame.draw.line(screen, (80, 0, 80), (west_init[0], west_init[1]), (west_final[0], west_final[1]), cell_width)
+        
+def define_problem(filename):
+    
+    ### Later, initial state id and objective state id will
+    ### be randomly generated and checked they're i nthe maze
+    
+    filename_noextension = os.path.splitext(filename)[0]
+    filename_list = filename_noextension.split("_")
+    problem = { "INITIAL": "(0,0)", 
+               "OBJECTIVE" : "({0},{1})".format(int(filename_list[1])-1, int(filename_list[2])-1), 
+               "MAZE" : filename
+            }
+    
+    with open("./json-problems/problem_{0}_{1}.json".format(int(filename_list[1]), int(filename_list[2])), 'w', encoding='utf-8') as f:
+        json.dump(problem, f, ensure_ascii=False, indent=2)

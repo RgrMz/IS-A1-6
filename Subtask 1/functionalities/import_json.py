@@ -1,6 +1,6 @@
 import json
 from maze_constants import *
-from functionalities.export import *
+from functionalities.export import export_image
 from classes.Maze import Maze
 from classes.Cell import Cell
 from classes.ConsistencyError import ConsistencyError
@@ -48,7 +48,7 @@ def is_consistent(cell, maze):
         
     return True
 
-def import_json(file_name):
+def import_json(file_name, export_image = True):
     
     """
         Description:
@@ -77,5 +77,8 @@ def import_json(file_name):
             if not is_consistent(grid[row][column], imported_maze):
                 raise ConsistencyError("The maze has an inconsistency", file_name, grid[row][column].get_position())
             
-    # If there is no exception then we can import the image
-    export_image(imported_maze)
+    if (export_image):
+        # If there is no exception then we can import the image
+        export_image(imported_maze)
+    else:
+        return imported_maze 

@@ -99,7 +99,7 @@ def drawCell(cell, screen, cell_x_length, cell_y_length):
 def define_problem(filename):
     
     ### Later, initial state id and objective state id will
-    ### be randomly generated and checked they're i nthe maze
+    ### be randomly generated and checked they're in the maze
     
     filename_noextension = os.path.splitext(filename)[0]
     filename_list = filename_noextension.split("_")

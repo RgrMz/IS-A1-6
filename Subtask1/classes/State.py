@@ -12,6 +12,7 @@ class State():
         self.id = cell.get_position()
         self.value = cell.get_value()
         
+        #North
         if cell.get_neighbours()[0]:
             self.neighbours.append(cell.get_North())
         else:

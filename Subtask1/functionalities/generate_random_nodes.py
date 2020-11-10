@@ -42,11 +42,11 @@ def generate_random_nodes(limit_depth):
     return nodes
 
 def position_to_state(states, position):
-    
+    # Given a position it returns the corresponding state object 
     for state in states:
         if state.id == position:
             return state
 
 def generate_random_maze():
-    
+    # Auxiliary function to obtain a maze to generate the nodes from
     return import_json("./json-mazes/Lab_10_10.json", False)

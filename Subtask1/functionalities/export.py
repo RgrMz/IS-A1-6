@@ -35,7 +35,7 @@ def export_json(maze):
             }
     
     # Saving the json file
-    with open("./json-mazes/Lab_{0}_{1}.json".format(maze.get_number_rows(), maze.get_number_columns()), 'w', encoding='utf-8') as f:
+    with open("./json-mazes/problem_{0}x{1}_maze.json".format(maze.get_number_rows(), maze.get_number_columns()), 'w', encoding='utf-8') as f:
         json.dump(maze_to_json, f, ensure_ascii=False, indent=2)
         
     ### A LO MEJOR INTERESA RETURNEAR EL FILENAME!!!
@@ -62,7 +62,7 @@ def export_image(maze):
             drawCell(grid[row][column],screen, cell_wall_length, cell_wall_length)
     #You can uncomment the line below to see the image in the screen
     #pygame.display.flip()
-    pygame.image.save(screen, "./images-mazes/Lab_{0}_{1}.png".format(maze.get_number_rows(), maze.get_number_columns()))
+    pygame.image.save(screen, "./images-mazes/puzzle_loop_{0}x{1}.png".format(maze.get_number_rows(), maze.get_number_columns()))
 
 def drawCell(cell, screen, cell_x_length, cell_y_length):
     
@@ -108,5 +108,5 @@ def define_problem(filename):
                "MAZE" : filename
             }
     
-    with open("./json-problems/problem_{0}_{1}.json".format(int(filename_list[1]), int(filename_list[2])), 'w', encoding='utf-8') as f:
+    with open("./json-problems/problem_{0}x{1}.json".format(int(filename_list[1]), int(filename_list[2])), 'w', encoding='utf-8') as f:
         json.dump(problem, f, ensure_ascii=False, indent=2)

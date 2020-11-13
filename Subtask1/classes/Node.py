@@ -14,7 +14,7 @@ class Node():
         self.value = 0
 
     def toString (self):
-        return (f"\nNode ID: {self.id} \nState ID: {self.idState.id} \nValue: {self.value} \n--------------------------------\n")
+        return (f"\n[{self.id}] [{cost},{self.idState.id},[{self.idParent.id}],[{self.action}],[{self.depth}],[{self.heuristic}],[{self.value}]")
     
     def __lt__(self, other):
         

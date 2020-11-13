@@ -1,3 +1,5 @@
+import random
+
 class Cell():
     
     """
@@ -22,7 +24,7 @@ class Cell():
         self._in_maze = False
         self._neighbours = [False]*4
         self._position = (row, column)
-        self._value = 0
+        self._value = random.randint(0,3)   #Generates a value for: [Asphalt, Earth, Grass, Water]
     
     def is_visited(self):
         return self._visited

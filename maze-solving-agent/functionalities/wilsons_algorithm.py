@@ -2,7 +2,7 @@ import random
 from maze_constants import *
 from classes.Maze import Maze
 
-# Random seed to get the random movements
+# Random seed to get the random MOVEMENTS
 random.seed()
 
 def generate_maze(maze):
@@ -34,9 +34,9 @@ def generate_maze(maze):
         
         while True:
             # Random movement
-            movement = random.choice(movements)
+            movement = random.choice(MOVEMENTS)
             # Checking if the movement takes us to a cell or outside the grid
-            next_cell_X, next_cell_Y = starting_X + move_in_columns[movement], starting_Y + move_in_rows[movement]
+            next_cell_X, next_cell_Y = starting_X + MOVE_IN_COLUMNS[movement], starting_Y + MOVE_IN_ROWS[movement]
             
             # If the cell is part of the maze we encountered a solution, therefore the path finishes
             # and we dont check if it is visited or not

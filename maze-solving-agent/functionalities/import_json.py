@@ -34,16 +34,16 @@ def is_consistent(cell, maze):
     
     #If a concrete neighbour exists, check the consistency
     if up_cell:
-        if(cell.get_neighbours()[neighbours_position['N']] != up_cell.get_neighbours()[neighbours_position['S']]):
+        if(cell.get_neighbours()[NEIGHBOURS_POSITION['N']] != up_cell.get_neighbours()[NEIGHBOURS_POSITION['S']]):
             return False
     if right_cell:
-        if(cell.get_neighbours()[neighbours_position['E']] != right_cell.get_neighbours()[neighbours_position['O']]):
+        if(cell.get_neighbours()[NEIGHBOURS_POSITION['E']] != right_cell.get_neighbours()[NEIGHBOURS_POSITION['O']]):
             return False
     if down_cell:
-        if(cell.get_neighbours()[neighbours_position['S']] != down_cell.get_neighbours()[neighbours_position['N']]):
+        if(cell.get_neighbours()[NEIGHBOURS_POSITION['S']] != down_cell.get_neighbours()[NEIGHBOURS_POSITION['N']]):
             return False
     if left_cell:
-        if(cell.get_neighbours()[neighbours_position['O']] != left_cell.get_neighbours()[neighbours_position['E']]):
+        if(cell.get_neighbours()[NEIGHBOURS_POSITION['O']] != left_cell.get_neighbours()[NEIGHBOURS_POSITION['E']]):
             return False
         
     return True

@@ -1,6 +1,6 @@
 from classes.Node import Node
 from classes.State import State 
-from functionalities.successor_function import successor_function                  
+from functionalities.problem_functions import successor_function                  
 from classes.Cell import Cell
 from functionalities.import_json import import_json
 import random
@@ -49,4 +49,4 @@ def position_to_state(states, position):
 
 def generate_random_maze():
     # Auxiliary function to obtain a maze to generate the nodes from
-    return import_json("./json-mazes/Lab_10_10.json", False)
+    return import_json("./json-mazes/Lab_10_25.json", False)

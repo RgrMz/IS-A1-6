@@ -1,5 +1,3 @@
-from classes.State import State
-
 class Node():
     
     def __init__(self, idNode, cost, newState, parent, action, depth, heuristic):
@@ -14,7 +12,13 @@ class Node():
         self.value = 0
 
     def toString (self):
-        return (f"\n[{self.id}] [{cost},{self.idState.id},[{self.idParent.id}],[{self.action}],[{self.depth}],[{self.heuristic}],[{self.value}]")
+        
+        nodeString = ''
+        if self.id == 0:  
+            nodeString = f'\n[{self.id}][{self.cost},{self.idState.id},{self.idParent},{self.action},{self.depth},{self.heuristic},{self.value}]'
+        else:
+            nodeString = f'\n[{self.id}][{self.cost},{self.idState.id},{self.idParent.id},{self.action},{self.depth},{self.heuristic},{self.value}]'
+        return nodeString
     
     def __lt__(self, other):
         

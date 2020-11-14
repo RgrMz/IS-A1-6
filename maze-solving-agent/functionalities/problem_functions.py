@@ -1,5 +1,3 @@
-from classes.State import State
-
 def successor_function (state):
 
     successors = []
@@ -13,4 +11,15 @@ def successor_function (state):
         successors.append(('O',state.neighbours[3],1))
 
     return successors
-# Crear toString maybe
+
+
+def goal_function(id_state, objective):
+    
+    return id_state == objective
+
+
+def heuristic_function(candidate_row, candidate_column, target_row, target_column):
+    
+    # Manhattan distance Heuristic((row,column))= |row-target_row| + |column-target_column|
+    return abs(candidate_row - target_row) + abs(candidate_column - target_column)
+

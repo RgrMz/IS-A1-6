@@ -75,9 +75,9 @@ def drawCell(cell, screen, cell_x_length, cell_y_length):
             cell_x_length (int): Starting X point where the cell is going to be drawn 
             cell_y_length (int): Starting Y point where the cell is going to be drawn
     """
-    
     cell_row = cell.get_X()
     cell_column = cell.get_Y()
+    cell_value = cell.get_value()
     north_init = [cell_x_length * cell_column + border_len, cell_y_length * cell_row + border_len]
     north_final = [cell_x_length * (cell_column + 1)  + border_len, cell_y_length * cell_row + border_len] 
     east_init = [cell_x_length * (cell_column + 1) + border_len, cell_y_length * cell_row  + border_len]
@@ -86,20 +86,33 @@ def drawCell(cell, screen, cell_x_length, cell_y_length):
     south_final = [cell_x_length * cell_column + border_len, cell_y_length * (cell_row + 1) + border_len]
     west_init = [cell_x_length * cell_column + border_len, cell_y_length * (cell_row + 1) + border_len]
     west_final = [cell_x_length * cell_column + border_len, cell_y_length * cell_row + border_len]
+    
+    # Variables used to color the cells
+    rect_x = north_init[0] + CELL_WIDTH
+    rect_y = north_init[1] + CELL_WIDTH
+    rect_width = south_init[0]-south_final[0]
+    rect_height = east_final[1]-east_init[1]
 
+    # Coloring of the cells
+    if cell_value != 0:
+        if cell_value == 1:
+            pygame.draw.rect(screen, EARTH,(rect_x, rect_y, rect_width, rect_height), 0)
+        elif cell_value == 2:
+            pygame.draw.rect(screen, GRASS,(rect_x, rect_y, rect_width, rect_height), 0)
+        elif cell_value == 3:
+            pygame.draw.rect(screen, WATER,(rect_x, rect_y, rect_width, rect_height), 0)
+        
     if cell.get_neighbours()[0] == False:
-        pygame.draw.line(screen, (80, 0, 80), (north_init[0], north_init[1]), (north_final[0], north_final[1]), cell_width)
+        pygame.draw.line(screen, BLACK, (north_init[0], north_init[1]), (north_final[0], north_final[1]), CELL_WIDTH)
     if cell.get_neighbours()[1] == False:
-        pygame.draw.line(screen, (80, 0, 80), (east_init[0], east_init[1]), (east_final[0], east_final[1]), cell_width)
+        pygame.draw.line(screen, BLACK, (east_init[0], east_init[1]), (east_final[0], east_final[1]), CELL_WIDTH)
     if cell.get_neighbours()[2] == False:
-        pygame.draw.line(screen, (80, 0, 80), (south_init[0], south_init[1]), (south_final[0], south_final[1]), cell_width)
+        pygame.draw.line(screen, BLACK, (south_init[0], south_init[1]), (south_final[0], south_final[1]), CELL_WIDTH)
     if cell.get_neighbours()[3] == False:
-        pygame.draw.line(screen, (80, 0, 80), (west_init[0], west_init[1]), (west_final[0], west_final[1]), cell_width)
+        pygame.draw.line(screen, BLACK, (west_init[0], west_init[1]), (west_final[0], west_final[1]), CELL_WIDTH)
+            
         
 def define_problem(filename):
-    
-    ### Later, initial state id and objective state id will
-    ### be randomly generated and checked they're in the maze
     
     filename_noextension = os.path.splitext(filename)[0]
     filename_list = filename_noextension.split("_")

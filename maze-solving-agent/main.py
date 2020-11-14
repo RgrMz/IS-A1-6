@@ -40,7 +40,7 @@ def menu():
 [3] Export problem to a JSON.\n
 [4] Compare the different frontier structures.\n{Fore.LIGHTCYAN_EX}
 [5] Exit.{Fore.RESET}\n"""))
-            if num_opt < 1 or num_opt > 4:
+            if num_opt < 1 or num_opt > 5:
                 print(f"{Fore.RED}Invalid option.{Fore.RESET}\n")
             else:
                 correct = True

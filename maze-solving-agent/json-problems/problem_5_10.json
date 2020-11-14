@@ -1,0 +1,5 @@
+{
+  "INITIAL": "(0,0)",
+  "OBJECTIVE": "(4,9)",
+  "MAZE": "./json-mazes/Lab_5_10.json"
+}

@@ -55,6 +55,9 @@ class Cell():
     
     def set_in_maze(self):
         self._in_maze = True
+        
+    def set_value(self, value):
+        self._value = value
     
     def get_neighbours(self):
         return self._neighbours

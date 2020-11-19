@@ -67,7 +67,7 @@ def import_json(file_name, export_image = True):
         for column in range(imported_maze.get_number_columns()):
             imported_maze.get_cell(row,column).set_neighbours(maze_dict["cells"][str(imported_maze.get_cell(row,column).get_position())]["neighbors"])
             # Get the value : implemented in the future
-            # imported_maze.get_cell(i,j).set_value(maze_dict["cells"][str(imported_maze.get_cell(i,j).get_position())]["value"])
+            imported_maze.get_cell(row,column).set_value(maze_dict["cells"][str(imported_maze.get_cell(row,column).get_position())]["value"])
     
     grid = imported_maze.get_grid()
     

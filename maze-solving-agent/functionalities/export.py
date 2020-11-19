@@ -50,7 +50,7 @@ def export_image(maze):
     """
     
     grid = maze.get_grid()
-    screen_height, screen_width = cell_wall_length*maze.get_number_rows() + border_len*2, cell_wall_length*maze.get_number_columns() + border_len*2
+    screen_height, screen_width = CELL_WALL_LENGTH*maze.get_number_rows() + BORDER_LEN*2, CELL_WALL_LENGTH*maze.get_number_columns() + BORDER_LEN*2
     pygame.init()
     screen = pygame.Surface((screen_width, screen_height))
     running = True
@@ -59,7 +59,7 @@ def export_image(maze):
     # Drawing all the cells
     for row in range(maze.get_number_rows()):
         for column in range(maze.get_number_columns()):
-            drawCell(grid[row][column],screen, cell_wall_length, cell_wall_length)
+            drawCell(grid[row][column],screen, CELL_WALL_LENGTH, CELL_WALL_LENGTH)
     #You can uncomment the line below to see the image in the screen
     #pygame.display.flip()
     pygame.image.save(screen, "./images-mazes/puzzle_loop_{0}x{1}.png".format(maze.get_number_rows(), maze.get_number_columns()))
@@ -78,14 +78,14 @@ def drawCell(cell, screen, cell_x_length, cell_y_length):
     cell_row = cell.get_X()
     cell_column = cell.get_Y()
     cell_value = cell.get_value()
-    north_init = [cell_x_length * cell_column + border_len, cell_y_length * cell_row + border_len]
-    north_final = [cell_x_length * (cell_column + 1)  + border_len, cell_y_length * cell_row + border_len] 
-    east_init = [cell_x_length * (cell_column + 1) + border_len, cell_y_length * cell_row  + border_len]
-    east_final = [cell_x_length * (cell_column + 1) + border_len, cell_y_length * (cell_row + 1) + border_len]
-    south_init = [cell_x_length * (cell_column + 1) + border_len, cell_y_length * (cell_row + 1) + border_len]
-    south_final = [cell_x_length * cell_column + border_len, cell_y_length * (cell_row + 1) + border_len]
-    west_init = [cell_x_length * cell_column + border_len, cell_y_length * (cell_row + 1) + border_len]
-    west_final = [cell_x_length * cell_column + border_len, cell_y_length * cell_row + border_len]
+    north_init = [cell_x_length * cell_column + BORDER_LEN, cell_y_length * cell_row + BORDER_LEN]
+    north_final = [cell_x_length * (cell_column + 1)  + BORDER_LEN, cell_y_length * cell_row + BORDER_LEN] 
+    east_init = [cell_x_length * (cell_column + 1) + BORDER_LEN, cell_y_length * cell_row  + BORDER_LEN]
+    east_final = [cell_x_length * (cell_column + 1) + BORDER_LEN, cell_y_length * (cell_row + 1) + BORDER_LEN]
+    south_init = [cell_x_length * (cell_column + 1) + BORDER_LEN, cell_y_length * (cell_row + 1) + BORDER_LEN]
+    south_final = [cell_x_length * cell_column + BORDER_LEN, cell_y_length * (cell_row + 1) + BORDER_LEN]
+    west_init = [cell_x_length * cell_column + BORDER_LEN, cell_y_length * (cell_row + 1) + BORDER_LEN]
+    west_final = [cell_x_length * cell_column + BORDER_LEN, cell_y_length * cell_row + BORDER_LEN]
     
     # Variables used to color the cells
     rect_x = north_init[0] + CELL_WIDTH
@@ -117,9 +117,19 @@ def define_problem(filename):
     filename_noextension = os.path.splitext(filename)[0]
     filename_list = filename_noextension.split("_")
     problem = { "INITIAL": "(0,0)", 
-               "OBJECTIVE" : "({0},{1})".format(int(filename_list[1])-1, int(filename_list[2])-1), 
+               "OBJETIVE" : "({0},{1})".format(int(filename_list[1])-1, int(filename_list[2])-1), 
                "MAZE" : filename
             }
     
     with open("./json-problems/problem_{0}x{1}.json".format(int(filename_list[1]), int(filename_list[2])), 'w', encoding='utf-8') as f:
         json.dump(problem, f, ensure_ascii=False, indent=2)
+        
+
+def save_solution(problem, nodeStack, strategy):
+    
+    txtSolution = '[id][cost,state,father_id,action,depth,h,value]'
+    while (nodeStack):
+        txtSolution += nodeStack.pop().toString()
+        
+    with open("./problem-solutions/solution_{0}x{1}_{2}.txt".format(problem.maze.get_number_rows(), problem.maze.get_number_columns(), strategy), 'w', encoding='utf-8' ) as f:
+        f.write(txtSolution)

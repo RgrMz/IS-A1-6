@@ -1,5 +1,6 @@
 import sys
 import random
+from maze_constants import STRATEGIES
 from classes.Maze import Maze
 from classes.ConsistencyError import ConsistencyError
 from classes.Frontier import Frontier
@@ -10,6 +11,10 @@ from functionalities.export import export_json, export_image, define_problem
 from functionalities.wilsons_algorithm import generate_maze
 from functionalities.generate_random_nodes import generate_random_nodes
 from functionalities.frontier_testing import execution_time
+from functionalities.read_problem import read_problem
+from functionalities.search_algorithm import search, find_solution
+from functionalities.export import save_solution
+
 
 # Colored text
 from colorama import Fore
@@ -38,9 +43,10 @@ def menu():
 [1] Create a maze and export a JSON file and a JPEG image.\n
 [2] Import a JSON file to produce the maze and export the JPEG image of it.\n
 [3] Export problem to a JSON.\n
-[4] Compare the different frontier structures.\n{Fore.LIGHTCYAN_EX}
-[5] Exit.{Fore.RESET}\n"""))
-            if num_opt < 1 or num_opt > 5:
+[4] Compare the different frontier structures.\n
+[5] Import a problem to solve using a search algorithm.\n{Fore.LIGHTCYAN_EX}
+[6] Exit.{Fore.RESET}\n"""))
+            if num_opt < 1 or num_opt > 6:
                 print(f"{Fore.RED}Invalid option.{Fore.RESET}\n")
             else:
                 correct = True
@@ -119,6 +125,39 @@ def menu():
                     print(f"Frontier List {value}: \n  - Total execution time: {total_time} \n  - Total push time: {pushed_time} \n  - Total pop time: {popped_time} ")
             
         elif num_opt == 5:
+            # Te gusta mi tecnica de copiar ehhhhhhhhhhhhhhhhhhhhhhhhhh (esta loco) zi
+            notValidStrategy = True
+            #try:
+            problem = read_problem(input("Please introduce the file name.\n"))
+            print(problem.stateSpace[(1,0)].value)
+            # except Exception as error:
+            #     print(f"{Fore.RED}") 
+            #     print("Error ocurred: {}".format(error))
+            #     print(f"{Fore.RESET}")
+            #     sys.exit()
+                
+            while(notValidStrategy):
+                strategy = (input("Please introduce the strategy you want to use: \n\t-BREADTH\n\t-DEPTH\n\t-UNIFORM\n\t-GREEDY\n\t-A\n").upper())
+                if (strategy in STRATEGIES):
+                    notValidStrategy = False
+                else:
+                    print(f"{Fore.RED}\nPlease introduce a valid strategy.{Fore.RESET}") 
+            
+            frontier = Frontier()   # Empty frontier to be used in the search algorithm
+            solutionNode = search(problem, frontier, strategy)
+            
+            if solutionNode:
+                solution = find_solution(solutionNode)
+                save_solution(problem, solution, strategy)
+            else:
+                print(f"{Fore.RED}\nThis problem has no solution!{Fore.RESET}")
+            #ahora tenemos los nodos, hay que pasarlos a string
+                        
+            print(f"{Fore.LIGHTCYAN_EX}Problem succesfully read!{Fore.RESET}")
+            correct = False
+            continue
+        
+        elif num_opt == 6:
             print(f"{Fore.LIGHTCYAN_EX}Thanks for using our program! Come back soon.{Fore.RESET}")
             exit()
                     

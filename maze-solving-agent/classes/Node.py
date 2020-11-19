@@ -21,6 +21,7 @@ class Node():
         return nodeString
     
     def __lt__(self, other):
-        
-        return (self.value, self.idState.id[0], self.idState.id[1]) < (other.value, other.idState.id[0], other.idState.id[1])
+        # To solve ambiguity: [value][row][column][node_id] as the node id is unique we won't have 
+        #problems stablishing the order
+        return (self.value, self.idState.id[0], self.idState.id[1], self.id) < (other.value, other.idState.id[0], other.idState.id[1], other.id)
         

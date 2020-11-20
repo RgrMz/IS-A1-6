@@ -6,35 +6,40 @@ def search(problem, frontier, strategy):
     
     visited = set()
     heuristic = heuristic_function(problem.initialState.id[0], problem.initialState.id[1], problem.finalState.id[0], problem.finalState.id[1])
-    frontier.push(Node(0, 0, problem.initialState, None, None, 0, heuristic))
-    # if strategy = A OR GREEDY change value of root Node, so the Node parameter should be created above
+    root = Node(0, 0, problem.initialState, None, None, 0, heuristic)
+    if strategy == "DEPTH": root.value = 1.0
+    elif strategy == "GREEDY" or strategy == "A": root.value = heuristic
+    
+    frontier.push(root)
+    
     while not(frontier.isEmpty()):
         
         node = frontier.pop()
         
         if goal_function(node.idState.id, problem.finalState.id):
-            return node
+            return node, frontier, visited      # Ask to the professor if we can do this
+                                                # Maybe we need to condensar the code to avoid muchas llamadas en el main
         
         if not(node.idState.id in visited):
-            # Insert all nodes as result from node expansion
             visited.add(node.idState.id)
             for newNode in expand(node, problem, strategy):
                 frontier.push(newNode)
-    
+        
     return None # Failure
                 
 
-def expand (node, problem, strategy):
+def expand(node, problem, strategy):
     
     successorsNodes = list()
-    newID = node.id + 1
+    # newID = node.id + 1
     
     for successor in successor_function(problem, node.idState):
         
+        problem.lastId += 1
         newState = problem.stateSpace[successor[1]]
         heuristic = heuristic_function(successor[1][0], successor[1][1], problem.finalState.id[0], problem.finalState.id[1])
         
-        newNode = Node(newID, node.cost + successor[2], newState, node, successor[0], node.depth + 1, heuristic)
+        newNode = Node(problem.lastId, node.cost + successor[2], newState, node, successor[0], node.depth + 1, heuristic)
         
         if strategy.upper() == 'BREADTH':
             newNode.value = newNode.depth
@@ -52,8 +57,6 @@ def expand (node, problem, strategy):
             newNode.value = newNode.heuristic + newNode.cost
             
         successorsNodes.append(newNode)
-        
-        newID += 1
         
     return successorsNodes
 

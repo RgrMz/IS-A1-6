@@ -13,7 +13,7 @@ from functionalities.generate_random_nodes import generate_random_nodes
 from functionalities.frontier_testing import execution_time
 from functionalities.read_problem import read_problem
 from functionalities.search_algorithm import search, find_solution
-from functionalities.export import save_solution
+from functionalities.export import save_solution, save_solution_image
 
 
 # Colored text
@@ -144,10 +144,11 @@ def menu():
                     print(f"{Fore.RED}\nPlease introduce a valid strategy.{Fore.RESET}") 
             
             frontier = Frontier()   # Empty frontier to be used in the search algorithm
-            solutionNode = search(problem, frontier, strategy)
+            solutionNode, frontier, visited = search(problem, frontier, strategy)
             
             if solutionNode:
                 solution = find_solution(solutionNode)
+                save_solution_image(solution, frontier, visited, problem, strategy)
                 save_solution(problem, solution, strategy)
             else:
                 print(f"{Fore.RED}\nThis problem has no solution!{Fore.RESET}")
@@ -171,4 +172,4 @@ def main():
     menu()
  
 if __name__ == "__main__": 
-    main()
+    main() 

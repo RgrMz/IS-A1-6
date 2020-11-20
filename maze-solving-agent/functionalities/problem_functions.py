@@ -12,9 +12,6 @@ def successor_function (problem, state):
         successors.append(('S', state.neighbours[2], problem.stateSpace[state.neighbours[2]].value + 1))
     if state.neighbours[3]:
         successors.append(('O', state.neighbours[3], problem.stateSpace[state.neighbours[3]].value + 1))
-        
-    if state.id == (0,0):
-        print(successors)
 
     return successors
 

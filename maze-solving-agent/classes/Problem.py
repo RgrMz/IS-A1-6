@@ -9,6 +9,7 @@ class Problem():
         self.initialState = initialState
         self.finalState = targetState
         self.stateSpace = dict()
+        self.lastId = 0
         for row in maze.get_grid():
             for cell in row:
                 state = State(cell)

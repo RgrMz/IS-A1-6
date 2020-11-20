@@ -59,12 +59,12 @@ def export_image(maze):
     # Drawing all the cells
     for row in range(maze.get_number_rows()):
         for column in range(maze.get_number_columns()):
-            drawCell(grid[row][column],screen, CELL_WALL_LENGTH, CELL_WALL_LENGTH)
+            draw_cell(grid[row][column],screen)
     #You can uncomment the line below to see the image in the screen
     #pygame.display.flip()
     pygame.image.save(screen, "./images-mazes/puzzle_loop_{0}x{1}.png".format(maze.get_number_rows(), maze.get_number_columns()))
 
-def drawCell(cell, screen, cell_x_length, cell_y_length):
+def draw_cell(cell, screen, colour = None):
     
     """
         Description:
@@ -78,14 +78,15 @@ def drawCell(cell, screen, cell_x_length, cell_y_length):
     cell_row = cell.get_X()
     cell_column = cell.get_Y()
     cell_value = cell.get_value()
-    north_init = [cell_x_length * cell_column + BORDER_LEN, cell_y_length * cell_row + BORDER_LEN]
-    north_final = [cell_x_length * (cell_column + 1)  + BORDER_LEN, cell_y_length * cell_row + BORDER_LEN] 
-    east_init = [cell_x_length * (cell_column + 1) + BORDER_LEN, cell_y_length * cell_row  + BORDER_LEN]
-    east_final = [cell_x_length * (cell_column + 1) + BORDER_LEN, cell_y_length * (cell_row + 1) + BORDER_LEN]
-    south_init = [cell_x_length * (cell_column + 1) + BORDER_LEN, cell_y_length * (cell_row + 1) + BORDER_LEN]
-    south_final = [cell_x_length * cell_column + BORDER_LEN, cell_y_length * (cell_row + 1) + BORDER_LEN]
-    west_init = [cell_x_length * cell_column + BORDER_LEN, cell_y_length * (cell_row + 1) + BORDER_LEN]
-    west_final = [cell_x_length * cell_column + BORDER_LEN, cell_y_length * cell_row + BORDER_LEN]
+    
+    north_init = [CELL_WALL_LENGTH * cell_column + BORDER_LEN, CELL_WALL_LENGTH * cell_row + BORDER_LEN]
+    north_final = [CELL_WALL_LENGTH * (cell_column + 1)  + BORDER_LEN, CELL_WALL_LENGTH * cell_row + BORDER_LEN] 
+    east_init = [CELL_WALL_LENGTH * (cell_column + 1) + BORDER_LEN, CELL_WALL_LENGTH * cell_row  + BORDER_LEN]
+    east_final = [CELL_WALL_LENGTH * (cell_column + 1) + BORDER_LEN, CELL_WALL_LENGTH * (cell_row + 1) + BORDER_LEN]
+    south_init = [CELL_WALL_LENGTH * (cell_column + 1) + BORDER_LEN, CELL_WALL_LENGTH * (cell_row + 1) + BORDER_LEN]
+    south_final = [CELL_WALL_LENGTH * cell_column + BORDER_LEN, CELL_WALL_LENGTH * (cell_row + 1) + BORDER_LEN]
+    west_init = [CELL_WALL_LENGTH * cell_column + BORDER_LEN, CELL_WALL_LENGTH * (cell_row + 1) + BORDER_LEN]
+    west_final = [CELL_WALL_LENGTH * cell_column + BORDER_LEN, CELL_WALL_LENGTH * cell_row + BORDER_LEN]
     
     # Variables used to color the cells
     rect_x = north_init[0] + CELL_WIDTH
@@ -101,6 +102,9 @@ def drawCell(cell, screen, cell_x_length, cell_y_length):
             pygame.draw.rect(screen, GRASS,(rect_x, rect_y, rect_width, rect_height), 0)
         elif cell_value == 3:
             pygame.draw.rect(screen, WATER,(rect_x, rect_y, rect_width, rect_height), 0)
+            
+    if colour:
+        pygame.draw.rect(screen, colour,(rect_x, rect_y, rect_width, rect_height), 0)
         
     if cell.get_neighbours()[0] == False:
         pygame.draw.line(screen, BLACK, (north_init[0], north_init[1]), (north_final[0], north_final[1]), CELL_WIDTH)
@@ -133,3 +137,39 @@ def save_solution(problem, nodeStack, strategy):
         
     with open("./problem-solutions/solution_{0}x{1}_{2}.txt".format(problem.maze.get_number_rows(), problem.maze.get_number_columns(), strategy), 'w', encoding='utf-8' ) as f:
         f.write(txtSolution)
+        
+def save_solution_image(solution, frontier, visited, problem, strategy): 
+    
+    #Creation of the screen
+    screen_height, screen_width = CELL_WALL_LENGTH*problem.maze.get_number_rows() + BORDER_LEN*2, CELL_WALL_LENGTH*problem.maze.get_number_columns() + BORDER_LEN*2
+    pygame.init()
+    screen = pygame.Surface((screen_width, screen_height))
+    screen.fill((255,255,255))
+    
+    for row in range(problem.maze.get_number_rows()):
+        for column in range(problem.maze.get_number_columns()):
+            draw_cell(problem.maze.get_grid()[row][column],screen)
+            
+    while not(frontier.isEmpty()):
+
+        node = frontier.pop()
+        cell = node.idState.id
+        cell_column, cell_row = cell[1], cell[0]
+        
+        draw_cell(problem.maze.get_cell(cell_row, cell_column), screen, FRONTIER)
+        
+    for cell in visited:
+        
+        cell_column, cell_row = cell[1], cell[0]
+
+        draw_cell(problem.maze.get_cell(cell_row, cell_column), screen, VISITED)
+        
+
+    for node in solution:
+        cell = node.idState.id
+        cell_column, cell_row = cell[1], cell[0]
+        
+        draw_cell(problem.maze.get_cell(cell_row, cell_column), screen, SOLUTION)
+
+    pygame.image.save(screen, "./problem-solutions/solution_{0}x{1}_{2}.png".format(problem.maze.get_number_rows(), problem.maze.get_number_columns(), strategy))
+    

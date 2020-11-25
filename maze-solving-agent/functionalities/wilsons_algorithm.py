@@ -25,7 +25,7 @@ def generate_maze(maze):
         # If the starting cell is part of the maze we dont have to find its way to the maze
         if starting_cell.is_in_maze(): continue
         
-        # As the starting cell is not par of the maze yet, we visit it and add it to the visited cells list
+        # As the starting cell is not part of the maze yet, we visit it and add it to the visited cells list
         visited_cells = []
         starting_cell.set_visited(True) 
         visited_cells.append(starting_cell)

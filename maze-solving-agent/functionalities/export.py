@@ -60,6 +60,7 @@ def export_image(maze):
     for row in range(maze.get_number_rows()):
         for column in range(maze.get_number_columns()):
             draw_cell(grid[row][column],screen)
+            
     #You can uncomment the line below to see the image in the screen
     #pygame.display.flip()
     pygame.image.save(screen, "./images-mazes/puzzle_loop_{0}x{1}.png".format(maze.get_number_rows(), maze.get_number_columns()))
@@ -72,9 +73,9 @@ def draw_cell(cell, screen, colour = None):
         Parameters:
             cell (Cell): Cell to be drawn
             screen (pygame.Surface): Surface where the cell is drawn
-            cell_x_length (int): Starting X point where the cell is going to be drawn 
-            cell_y_length (int): Starting Y point where the cell is going to be drawn
+            colour (tuple): a colour to paint a specific cell specified in RGB format
     """
+    
     cell_row = cell.get_X()
     cell_column = cell.get_Y()
     cell_value = cell.get_value()
@@ -94,7 +95,7 @@ def draw_cell(cell, screen, colour = None):
     rect_width = south_init[0]-south_final[0]
     rect_height = east_final[1]-east_init[1]
 
-    # Coloring of the cells
+    # Coloring of the cells according to its value
     if cell_value != 0:
         if cell_value == 1:
             pygame.draw.rect(screen, EARTH,(rect_x, rect_y, rect_width, rect_height), 0)
@@ -102,7 +103,8 @@ def draw_cell(cell, screen, colour = None):
             pygame.draw.rect(screen, GRASS,(rect_x, rect_y, rect_width, rect_height), 0)
         elif cell_value == 3:
             pygame.draw.rect(screen, WATER,(rect_x, rect_y, rect_width, rect_height), 0)
-            
+    
+    # Coloring the cell if some colour is passed (used for solution graphical representation)        
     if colour:
         pygame.draw.rect(screen, colour,(rect_x, rect_y, rect_width, rect_height), 0)
         
@@ -118,18 +120,35 @@ def draw_cell(cell, screen, colour = None):
         
 def define_problem(filename):
     
+    """
+        Description:
+            Saves as a JSON file the description of a problem.
+        Parameters:
+            filename (string): the filename to be saved.
+    """
+    
     filename_noextension = os.path.splitext(filename)[0]
     filename_list = filename_noextension.split("_")
+    number_rows, number_columns = filename_list[1].split('x')
     problem = { "INITIAL": "(0,0)", 
-               "OBJETIVE" : "({0},{1})".format(int(filename_list[1])-1, int(filename_list[2])-1), 
+               "OBJETIVE" : "({0},{1})".format(int(number_rows)-1, int(number_rows)-1), 
                "MAZE" : filename
             }
     
-    with open("./json-problems/problem_{0}x{1}.json".format(int(filename_list[1]), int(filename_list[2])), 'w', encoding='utf-8') as f:
+    with open("./json-problems/problem_{0}x{1}.json".format(int(number_rows), int(number_columns)), 'w', encoding='utf-8') as f:
         json.dump(problem, f, ensure_ascii=False, indent=2)
         
 
 def save_solution(problem, nodeStack, strategy):
+    
+    """
+        Description:
+            Saves the solution (sequence of nodes) of a problem in a txt file.
+        Parameters:
+            problem (Problem): the Problem instance that has been solved.
+            nodeStack (list): the sequence of nodes that form the solution
+            strategy (string): the selected strategy to solve  the problem
+    """
     
     txtSolution = '[id][cost,state,father_id,action,depth,h,value]'
     while (nodeStack):
@@ -138,18 +157,31 @@ def save_solution(problem, nodeStack, strategy):
     with open("./problem-solutions/solution_{0}x{1}_{2}.txt".format(problem.maze.get_number_rows(), problem.maze.get_number_columns(), strategy), 'w', encoding='utf-8' ) as f:
         f.write(txtSolution)
         
-def save_solution_image(solution, frontier, visited, problem, strategy): 
+def save_solution_image(solution, frontier, visited, problem, strategy):
     
-    #Creation of the screen
+    """
+        Description:
+            Saves as a PNG image the graphical representation of the solution over the maze
+        Parameters:
+            solution (list): the list of nodes that form the solution
+            frontier (Frontier): the frontier used in the problem solving
+            visited (set): set of states visited during the problem solving
+            problem (Problem): the Problem instance that has been solved.
+            strategy (string): the selected strategy to solve  the problem
+    """ 
+    
+    # Creation of the screen
     screen_height, screen_width = CELL_WALL_LENGTH*problem.maze.get_number_rows() + BORDER_LEN*2, CELL_WALL_LENGTH*problem.maze.get_number_columns() + BORDER_LEN*2
     pygame.init()
     screen = pygame.Surface((screen_width, screen_height))
     screen.fill((255,255,255))
     
+    # Painting the initial maze
     for row in range(problem.maze.get_number_rows()):
         for column in range(problem.maze.get_number_columns()):
             draw_cell(problem.maze.get_grid()[row][column],screen)
-            
+    
+    # Painting frontier 
     while not(frontier.isEmpty()):
 
         node = frontier.pop()
@@ -157,19 +189,20 @@ def save_solution_image(solution, frontier, visited, problem, strategy):
         cell_column, cell_row = cell[1], cell[0]
         
         draw_cell(problem.maze.get_cell(cell_row, cell_column), screen, FRONTIER)
-        
+    
+    # Painting visited list    
     for cell in visited:
         
         cell_column, cell_row = cell[1], cell[0]
 
         draw_cell(problem.maze.get_cell(cell_row, cell_column), screen, VISITED)
         
-
+    # Painting solution
     for node in solution:
         cell = node.idState.id
         cell_column, cell_row = cell[1], cell[0]
         
         draw_cell(problem.maze.get_cell(cell_row, cell_column), screen, SOLUTION)
 
-    pygame.image.save(screen, "./problem-solutions/solution_{0}x{1}_{2}.png".format(problem.maze.get_number_rows(), problem.maze.get_number_columns(), strategy))
+    pygame.image.save(screen, "./problem-solutions/solution_{0}x{1}_{2}_20.png".format(problem.maze.get_number_rows(), problem.maze.get_number_columns(), strategy))
     

@@ -1,4 +1,4 @@
-from time import time   # To measure the execution time
+import time  # To measure the execution time
 import sys
 from classes.Cell import Cell
 from classes.State import State
@@ -13,17 +13,17 @@ from classes.FrontierList import FrontierList
 
 def execution_time(nodes, frontier):
     
-    initial_time = time()
+    initial_time = time.perf_counter()
     
     for node in nodes:
         frontier.push(node)
-    pushed_time = time()
+    pushed_time = time.perf_counter()
     
     while not(frontier.isEmpty()):
         aux = frontier.pop()
-    popped_time = time()
+    popped_time = time.perf_counter()
     
-    final_time = time()
+    final_time = time.perf_counter()
 
     # Total execution time, time to push all, time to pop all
     return final_time - initial_time, pushed_time - initial_time, popped_time - pushed_time
@@ -49,4 +49,3 @@ def execution_time(nodes, frontier):
 #             sys.stderr.write("Memory consumed: " + str(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss/10**6) + " GB" + "\nNumber of elements stored: " + str(count) + " elements\n")
 #             sys.exit(-1)
 #     sys.stderr.write("\n\nMemory consumed: " + str(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss/10**6) + " GB" + "\n\nNumber of elements stored: " + str(count) + " elements\n\n\n")
-

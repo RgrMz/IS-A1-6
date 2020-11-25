@@ -14,8 +14,8 @@ class Maze():
                 This is the constructor of the objects of this class.
             Parameters:
                 self (Maze): Represents the instance of the object, the maze you are creating/working on.
-                row (int): Represents the number of rows of the maze.
-                column (int): Represents the number of columns of the maze.
+                number_rows (int): Represents the number of rows of the maze.
+                number_columns (int): Represents the number of columns of the maze.
         """
         
         self._rows = number_rows
@@ -31,7 +31,13 @@ class Maze():
         return self._grid
     
     def get_cell(self, position_X, position_Y):
-        return self.get_grid()[position_X][position_Y]    
+        return self.get_grid()[position_X][position_Y]   
+    
+    def get_number_rows(self):
+        return self._rows
+    
+    def get_number_columns(self):
+        return self._columns 
     
     def exists_cell(self, position_X, position_Y):
         """
@@ -43,12 +49,6 @@ class Maze():
                 position_Y (int): Represents the column where the cell is.
         """
         return position_X >= 0 and position_X < len(self.get_grid()) and position_Y >= 0 and position_Y < len(self.get_grid()[0])
-
-    def get_number_rows(self):
-        return self._rows
-    
-    def get_number_columns(self):
-        return self._columns
 
     def break_walls(self, cell1, cell2):
 

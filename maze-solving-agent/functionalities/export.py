@@ -38,7 +38,6 @@ def export_json(maze):
     with open("./json-mazes/problem_{0}x{1}_maze.json".format(maze.get_number_rows(), maze.get_number_columns()), 'w', encoding='utf-8') as f:
         json.dump(maze_to_json, f, ensure_ascii=False, indent=2)
         
-    ### A LO MEJOR INTERESA RETURNEAR EL FILENAME!!!
             
 def export_image(maze):
     
@@ -180,6 +179,8 @@ def save_solution_image(solution, frontier, visited, problem, strategy):
     for row in range(problem.maze.get_number_rows()):
         for column in range(problem.maze.get_number_columns()):
             draw_cell(problem.maze.get_grid()[row][column],screen)
+            
+    pygame.image.save(screen, "./problem-solutions/initial_{0}x{1}_{2}_20.png".format(problem.maze.get_number_rows(), problem.maze.get_number_columns(), strategy))
     
     # Painting frontier 
     while not(frontier.isEmpty()):

@@ -8,8 +8,8 @@ MAXIMUM_DEPTH = 1000000
 
 ### Constants to be used for drawing the maze
 CELL_WIDTH = 1
-border_len = 10
-cell_wall_length = 15
+BORDER_LEN = 10
+CELL_WALL_LENGTH = 15
 
 ### Constants for the colors of the cells and lines
 BLACK = (0,0,0)
@@ -21,3 +21,7 @@ EARTH = (245, 222, 179)
 VISITED = (0, 255, 0)
 FRONTIER = (0, 0, 255)
 SOLUTION = (255, 0, 0)
+
+### Strategies to be implemented in the search algorithm
+
+STRATEGIES = set(["BREADTH", "DEPTH", "UNIFORM", "GREEDY", "A", ])

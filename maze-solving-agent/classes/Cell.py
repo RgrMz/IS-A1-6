@@ -8,7 +8,6 @@ class Cell():
             and in the final maze when found.
     """
     
-    #_neighbours = []
     def __init__(self, row, column):
         
         """
@@ -55,13 +54,28 @@ class Cell():
     
     def set_in_maze(self):
         self._in_maze = True
+        
+    def set_value(self, value):
+        self._value = value
     
     def get_neighbours(self):
         return self._neighbours
     
     def set_neighbours(self, new_neighbours):
         self._neighbours = new_neighbours
-        
+    
+    def get_North(self):
+        return (self.get_X()-1, self.get_Y())
+    
+    def get_East(self):
+        return (self.get_X(), self.get_Y()+1)
+    
+    def get_South(self):
+        return (self.get_X()+1, self.get_Y())
+    
+    def get_West(self):
+        return (self.get_X(), self.get_Y()-1)
+    
     def add_neighbour(self, direction):
         
         """
@@ -80,15 +94,3 @@ class Cell():
             self._neighbours[2] = True
         elif direction == 'O':
             self._neighbours[3] = True
-    
-    def get_North(self):
-        return (self.get_X()-1, self.get_Y())
-    
-    def get_East(self):
-        return (self.get_X(), self.get_Y()+1)
-    
-    def get_South(self):
-        return (self.get_X()+1, self.get_Y())
-    
-    def get_West(self):
-        return (self.get_X(), self.get_Y()-1)

@@ -31,8 +31,7 @@ def search(problem, frontier, strategy):
         node = frontier.pop()
         
         if goal_function(node.idState.id, problem.finalState.id):
-            return node, frontier, visited      # Ask to the professor if we can do this
-                                                # Maybe we need to condensar the code to avoid muchas llamadas en el main
+            return node, frontier, visited
         
         if not(node.idState.id in visited):
             visited.add(node.idState.id)

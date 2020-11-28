@@ -22,17 +22,22 @@ This software is used via **command line**, in which a **menu** with the functio
       - A .txt file containing the **solution path** as a list of items called **nodes**. 
   6. Exit the program.
 
+### Libraries you need to install to run this program
 Before running the program it is necessary to install two modules:
-  + pygame: `python -m pip install -U pygame --user`
-  + colorama: `python setup.py install --user` or if you have pip `pip install colorama --user`
+  - pygame: `python -m pip install -U pygame --user` which is used to generate **graphical representations** of the mazes.
+  - colorama: `python setup.py install --user` or if you have pip `pip install colorama --user` to make a more friendly **GUI**.
   
-  Note: If you dont have superuser privileges you can use `--user`. Otherwise just type `sudo <command>`
+  **NOTE**: If you dont have superuser privileges you can use `--user` as stated above. Otherwise just type `sudo <command>` being `<command>` the command from the above you want to run.
 
-The way of running it is:
-
-    1. Move yourself into the folder `Subtask1` with `cd Subtask1/`
+### How to run
+The way of running this software is:
+  1. Clone this repository and move to it.
+  
+  2. Move yourself into the folder `maze-solving-agent` using `cd maze-solving-agent/` if you are using Linux OS or using the file explorer in Windows. 
     
-    2. Execute the command `python -B main.py` if you have installed Python3 or a superior version, otherwise `python3 -B main.py`
+  3. Execute the command `python -B main.py`. If you have installed Python 3.0.0 or a superior version, otherwise `python3 -B main.py` (check it with `python --version`)
     
-    3. Interact with the command line menu to obtain the desired result
+  4. Interact with the command line menu to select the option you desire to run form the above shown. In the folder `test-files` you have files to test the different functionalities of the program.
+  
+  
   
